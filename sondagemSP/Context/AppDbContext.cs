@@ -11,11 +11,10 @@ namespace sondagemSP.Context
         public DbSet<Cadastro> Cadastro { get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-
         }
     }
     public class UsuarioDbContext : IdentityDbContext<Usuario>
     {
-        public UsuarioDbContext(DbContextOptions<UsuarioDbContext> options) : base() { }
+        public UsuarioDbContext(DbContextOptions<UsuarioDbContext> options) : base(options) { }
     }
 }

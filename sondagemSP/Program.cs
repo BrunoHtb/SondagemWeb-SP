@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,7 +23,10 @@ builder.Services.AddTransient<ICadastroRepository, CadastroRepository>();
 //Configuração para utilizar o IDENTITY
 builder.Services.AddIdentity<Usuario, IdentityRole>().
     AddEntityFrameworkStores<UsuarioDbContext>()
-    .AddDefaultTokenProviders();
+.AddDefaultTokenProviders();
+
+//Configurando o AutoMapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
@@ -44,6 +48,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Account}/{action=Login}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

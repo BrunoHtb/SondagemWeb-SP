@@ -1,0 +1,137 @@
+﻿@model IEnumerable<sondagemSP.Models.Cadastro>
+
+@{
+    ViewData["Title"] = "Cadastro";
+}
+
+<h1>Cadastros Sondagem - SP</h1>
+
+<div style="height: 250px; overflow-y: scroll">
+    <table class="table">
+        <thead style="position:static">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Data_Cadastro)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Latitude)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Longitude)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Latitude_Prevista)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Longitude_Prevista)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Rodovia)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Estaca)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Regional)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Subtrecho)
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="linha-tabela">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Data_Cadastro)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Latitude)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Longitude)
+                    </td>
+                    <td id="latitude-prevista">
+                        @Html.DisplayFor(modelItem => item.Latitude_Prevista)
+                    </td>
+                    <td id="longitude-prevista">
+                        @Html.DisplayFor(modelItem => item.Longitude_Prevista)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rodovia)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estaca)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Regional)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subtrecho)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ID" method="post"> Edit </a>
+
+                        <a asp-action="Delete" asp-route-id="@item.ID"> Delete </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script src="~/lib/leaflet/leaflet.js"></script>
+<script src="~/lib/leaflet/leaflet.min.js"></script>
+
+<div id="map" style="width:100%; height:350px"></div>
+
+<script>
+
+    //Salva no jsModel a lista, foi necessario fazer new{Cadastros = Model} pq sem ele dá erro
+    // de async
+    var jsModel = @Html.Raw(Json.Serialize(new {Cadastros = Model}));
+
+    //Pega o primeiro elemento para localizar no mapa a região
+    var map = L.map('map').setView([jsModel.cadastros[0].latitude_Prevista.replace(",", "."), jsModel.cadastros[0].longitude_Prevista.replace(",", ".")], 15);
+
+    L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
+        maxZoom: 22,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+    }).addTo(map);
+
+    for (i in jsModel.cadastros)
+    {
+        item = jsModel.cadastros[i];
+        L.marker([item.latitude_Prevista.replace(",", "."), item.longitude_Prevista.replace(",", ".")])
+        .addTo(map)
+        .bindPopup(item.nome + "<br>" + item.estaca)
+        .openPopup();
+    }
+
+    //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    //Função responsavel para verificar qual linha foi clicado na tabela
+    var linhasTabela = document.querySelectorAll('.linha-tabela');
+    linhasTabela.forEach(function (linha) {
+        linha.addEventListener('click', function(){
+            $('tr').removeClass('table-active');
+            $(this).addClass('table-active');
+
+            var lat = document.querySelector('.table-active #latitude-prevista').textContent.replace(",", ".");
+            var long = document.querySelector('.table-active #longitude-prevista').textContent.replace(",", ".");
+
+            // voa para a posição do marcador e aplica o nível de zoom desejado
+            map.flyTo([lat, long], 18);
+        });
+    });
+
+    //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+</script>
+
