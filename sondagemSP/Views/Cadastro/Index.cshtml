@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<sondagemSP.Models.Cadastro>
-
 @{
     ViewData["Title"] = "Cadastro";
 }
+<div class="text-center">
+    <h1 class="display-4">Cadastros Sondagem - SP</h1>
+</div>
 
-<h1>Cadastros Sondagem - SP</h1>
-
-<div style="height: 250px; overflow-y: scroll">
-    <table class="table">
+<div style="height: 300px; overflow-y: scroll">
+    <table id="tabela-cadastros" class="table">
         <thead style="position:static">
             <tr>
                 <th>
@@ -21,12 +21,6 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Longitude)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Latitude_Prevista)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Longitude_Prevista)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Rodovia)
@@ -47,7 +41,7 @@
             @foreach (var item in Model)
             {
                 <tr class="linha-tabela">
-                    <td>
+                    <td id="nome">
                         @Html.DisplayFor(modelItem => item.Nome)
                     </td>
                     <td>
@@ -68,7 +62,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Rodovia)
                     </td>
-                    <td>
+                    <td id="estaca">
                         @Html.DisplayFor(modelItem => item.Estaca)
                     </td>
                     <td>
@@ -78,19 +72,21 @@
                         @Html.DisplayFor(modelItem => item.Subtrecho)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.ID" method="post"> Edit </a>
-
-                        <a asp-action="Delete" asp-route-id="@item.ID"> Delete </a>
+                        <div class="btn-group" role="group">
+                            <a asp-action="Edit" asp-route-id="@item.ID" role="button" class="btn btn-primary" method="post"> Editar </a>
+                            <a asp-action="Delete" asp-route-id="@item.ID" role="button" class="btn btn-danger"> Deletar </a>
+                        </div>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
 <script src="~/lib/leaflet/leaflet.js"></script>
 <script src="~/lib/leaflet/leaflet.min.js"></script>
 
-<div id="map" style="width:100%; height:350px"></div>
+<div id="map" style="width:100%; height:350px; margin-top:20px"></div>
 
 <script>
 
@@ -106,13 +102,23 @@
         subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
     }).addTo(map);
 
-    for (i in jsModel.cadastros)
-    {
-        item = jsModel.cadastros[i];
-        L.marker([item.latitude_Prevista.replace(",", "."), item.longitude_Prevista.replace(",", ".")])
-        .addTo(map)
-        .bindPopup(item.nome + "<br>" + item.estaca)
-        .openPopup();
+    function mostrarTodosPopup() {    
+        for (i in jsModel.cadastros) {
+            item = jsModel.cadastros[i];
+            L.marker([item.latitude_Prevista.replace(",", "."), item.longitude_Prevista.replace(",", ".")])
+                .addTo(map)
+                .bindPopup(item.nome + "<br>" + item.estaca)
+                .openPopup();
+        }
+    }
+
+    function mostrarPopupClicado(lat, long, nome, estaca) {
+        L.marker([lat, long])
+            .addTo(map)
+            .bindPopup(nome + "<br>" + estaca)
+            .openPopup();
+        
+
     }
 
     //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -125,7 +131,10 @@
 
             var lat = document.querySelector('.table-active #latitude-prevista').textContent.replace(",", ".");
             var long = document.querySelector('.table-active #longitude-prevista').textContent.replace(",", ".");
+            var nome = document.querySelector('.table-active #nome').textContent;
+            var estaca = document.querySelector('.table-active #estaca').textContent;
 
+            mostrarPopupClicado(lat, long, nome, estaca);
             // voa para a posição do marcador e aplica o nível de zoom desejado
             map.flyTo([lat, long], 18);
         });

@@ -1,35 +1,159 @@
 ﻿@model IEnumerable<sondagemSP.Models.Cadastro>
 @{
-    ViewData["Title"] = "Edidar";
+    ViewData["Title"] = "Página de Edição";
 }
-<h1>Tela de Edição</h1>
+<div class="text-center">
+    <h1>Editar Cadastro</h1>
+</div>
 
 <div class="container mt-4">
+    <form asp-action="Save" method="post">
 
-    <form asp-action="Edit">
-        <div class="form-row">
-            <div class="form-group col-md-6">
+        <input asp-for="@Model.First().ID" type="hidden" id="cadastro-id" value="@Model.First().ID" />
+        <input asp-for="@Model.First().Fotos" type="hidden" id="cadastro-fotos" value="@Model.First().Fotos" />
+        <input asp-for="@Model.First().Data_Cadastro" type="hidden" id="cadastro-data_cadastro" value="@Model.First().Data_Cadastro" />
+        <input asp-for="@Model.First().Data_Modificacao" type="hidden" id="cadastro-data_modificacao" value="@Model.First().Data_Modificacao" />
+        <input asp-for="@Model.First().Observacao_Lado" type="hidden" id="cadastro-observacao_lado" value="@Model.First().Observacao_Lado" />
+        <input asp-for="@Model.First().Entrega" type="hidden" id="cadastro-entrega" value="@Model.First().Entrega" />
+        <input asp-for="@Model.First().Latitude_Prevista" type="hidden" id="cadastro-latitude_prevista" value="@Model.First().Latitude_Prevista" />
+        <input asp-for="@Model.First().Longitude_Prevista" type="hidden" id="cadastro-longitude_prevista" value="@Model.First().Longitude_Prevista" />
+        <input asp-for="@Model.First().Login" type="hidden" id="cadastro-login" value="@Model.First().Login" />
+        <input asp-for="@Model.First().Trecho" type="hidden" id="cadastro-trecho" value="@Model.First().Trecho" />
+        <input asp-for="@Model.First().Metro" type="hidden" id="cadastro-metro" value="@Model.First().Metro" />
+
+        <input asp-for="@Model.First().Camadas" type="hidden" id="cadastro-camadas" value="@Model.First().Camadas" />
+        <input asp-for="@Model.First().Espessuras" type="hidden" id="cadastro-espessuras" value="@Model.First().Espessuras" />
+
+        <div class="row">
+            <!-- Nome do ponto -->
+            <div class="form-group col-md-4">
                 <label for="cadastro-nome">Cadastro</label>
-                <input asp-for="@Model.First().Nome" type="text" class="form-control" id="cadastro-nome" value="@Model.First().Nome">
+                <input asp-for="@Model.First().Nome" type="text" class="form-control" id="cadastro-nome" value="@Model.First().Nome" />
             </div>
-            <div class="form-group col-md-6">
+            <!-- Regional -->
+            <div class="form-group col-md-4">
                 <label for="item-superintendencia">Superintendência</label>
                 <select asp-for="@Model.First().Regional" asp-items="@ViewBag.RegionalList" class="form-select"></select>
             </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group col-md-6">
+            <!-- Subtrecho -->
+            <div class="form-group col-md-4">
                 <label for="cadastro-nome">Subtrecho</label>
-                <input asp-for="@Model.First().Subtrecho" type="text" class="form-control" id="cadastro-subtrecho" value="@Model.First().Subtrecho">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="item-superintendencia">Estaca</label>
-                <input asp-for="@Model.First().Estaca" type="text" class="form-control" id="cadastro-estaca" value="@Model.First().Estaca">
+                <select asp-for="@Model.First().Subtrecho" asp-items="@ViewBag.SubtrechoList" class="form-select"></select>
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Salvar</button>
+        <div class="row">
+            <!-- Rodovia -->
+            <div class="form-group col-md-4">
+                <label for="item-rodovia">Rodovia</label>
+                <input asp-for="@Model.First().Rodovia" type="text" class="form-control" id="cadastro-rodovia" value="@Model.First().Rodovia" />
+            </div>
+            <!-- Estaca -->
+            <div class="form-group col-md-4">
+                <label for="item-superintendencia">Estaca</label>
+                <input asp-for="@Model.First().Estaca" type="text" class="form-control" id="cadastro-estaca" value="@Model.First().Estaca" />
+            </div>
+            <!-- Status -->
+            <div class="form-group col-md-4">
+                <label for="item-status">Status</label>
+                <input asp-for="@Model.First().Status" class="form-control" id="cadastro-status" value="@Model.First().Status" />
+            </div>         
+        </div>
+
+        <div class="row">
+            <!--Latitude -->
+            <div class="form-group col-md-6">
+                <label for="item-latitude">Latitude</label>
+                <input asp-for="@Model.First().Latitude" class="form-control" id="cadastro-latitude" value="@Model.First().Latitude" />
+            </div>
+            <!-- Longitude -->
+            <div class="form-group col-md-6">
+                <label for="item-longitude">Longitude</label>
+                <input asp-for="@Model.First().Longitude" class="form-control" id="cadastro-longitude" value="@Model.First().Longitude" />
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Latitude Prevista -->
+            <div class="form-group col-md-6">
+                <label for="item-latitude">Latitude Local</label>
+                <input asp-for="@Model.First().Latitude_Local" class="form-control" id="cadastro-latitude" value="@Model.First().Latitude_Local" />
+            </div>
+            <!-- Longitude Prevista -->
+            <div class="form-group col-md-6">
+                <label for="item-longitude">Longitude Local</label>
+                <input asp-for="@Model.First().Longitude_Local" class="form-control" id="cadastro-longitude" value="@Model.First().Longitude_Local" />
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- KM -->
+            <div class="form-group col-md-6">
+                <label for="item-km">KM</label>
+                <input asp-for="@Model.First().Km" class="form-control" id="cadastro-km" value="@Model.First().Km" />
+            </div>
+            <!-- Área -->
+            <div class="form-group col-md-6">
+                <label for="item-area">Área</label>
+                <input asp-for="@Model.First().Area" class="form-control" id="cadastro-area" value="@Model.First().Area" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <labe for="item-camada1">Camada 1</labe>
+                <input asp-for="@Model.First().Camada1" class="form-control" id="cadastro-camada1" value="@Model.First().Camadas.Split(";")[0]" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="item-espessura1">Espessura 1</label>
+                <input asp-for="@Model.First().Espessura1" class="form-control" id="cadastro-espessura1" value="@Model.First().Espessuras.Split(";")[0]" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <labe for="item-camada1">Camada 2</labe>
+                <input asp-for="@Model.First().Camada2" class="form-control" id="cadastro-camada2" value="@Model.First().Camadas.Split(";")[1]" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="item-espessura2">Espessura 2</label>
+                <input asp-for="@Model.First().Espessura2" class="form-control" id="cadastro-espessura2" value="@Model.First().Espessuras.Split(";")[1]" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <labe for="item-camada1">Camada 3</labe>
+                <input asp-for="@Model.First().Camada3" class="form-control" id="cadastro-camada3" value="@Model.First().Camadas.Split(";")[2]" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="item-espessura1">Espessura 3</label>
+                <input asp-for="@Model.First().Espessura3" class="form-control" id="cadastro-espessura3" value="@Model.First().Espessuras.Split(";")[2]" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6">
+                <labe for="item-camada1">Camada 4</labe>
+                <input asp-for="@Model.First().Camada4" class="form-control" id="cadastro-camada4" value="@Model.First().Camadas.Split(";")[3]" />
+            </div>
+            <div class="form-group col-md-6">
+                <label for="item-espessura1">Espessura 4</label>
+                <input asp-for="@Model.First().Espessura4" class="form-control" id="cadastro-espessura4" value="@Model.First().Espessuras.Split(";")[3]" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                <label for="item-observacao">Observação</label>
+                <input asp-for="@Model.First().Observacao" class="form-control" id="cadastro-observacao" value="@Model.First().Observacao" />
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:20px; padding:20px">
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Salvar</button>
+            <a style="margin-top:15px" class="btn btn-secondary btn-lg btn-block" asp-controller="Cadastro" asp-action="Index">Voltar</a>
+        </div>
     </form>
 
 </div>

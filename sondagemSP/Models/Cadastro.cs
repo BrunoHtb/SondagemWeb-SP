@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace sondagemSP.Models
 {
@@ -44,13 +45,16 @@ namespace sondagemSP.Models
         public string Trecho { get; set; }
 
         [Column("subtrecho")]
+        [DefaultValue("")]
         public string Subtrecho { get; set; }
 
         [Column("fotos")]
+        [DefaultValue(";;;;")]
         [DataType(DataType.Text)]
         public string Fotos { get; set; }
 
         [Column("camadas")]
+        [DefaultValue(";;;")]
         [DataType(DataType.Text)]
         public string Camadas { get; set; }
 
@@ -59,6 +63,7 @@ namespace sondagemSP.Models
         public string Espessuras { get; set; }
 
         [Column("observacao")]
+        [DefaultValue("")]
         public string Observacao { get; set; }
 
         [Column("area")]
@@ -87,5 +92,28 @@ namespace sondagemSP.Models
 
         [Column("data_modificacao")]
         public string Data_Modificacao { get; set; }
+
+        /* 
+         *****************************************************************************
+                                    VARIAVEIS NÃO MAPEADAS
+        ****************************************************************************
+         */
+        [NotMapped]
+        public string? Camada1 { get; set; }
+        [NotMapped]
+        public string? Camada2 { get; set; }
+        [NotMapped]
+        public string? Camada3 { get; set; }
+        [NotMapped]
+        public string? Camada4 { get; set; }
+        [NotMapped]
+        public string? Espessura1 { get; set; }
+        [NotMapped]
+        public string? Espessura2 { get; set; }
+        [NotMapped]
+        public string? Espessura3 { get; set; }
+        [NotMapped]
+        public string? Espessura4 { get; set; }
+
     }
 }
