@@ -12,86 +12,86 @@ namespace sondagemSP.Models
         public int ID { get; set; }
 
         [Column("nome")]
-        public string Nome { get; set; }
+        public string? Nome { get; set; }
 
         [Column("data_cadastro")]
-        public string Data_Cadastro { get; set; }
+        public string? DataCadastro { get; set; }
 
         [Column("latitude")]
-        public string Latitude { get; set; }
+        public string? Latitude { get; set; }
 
         [Column("longitude")]
-        public string Longitude { get; set; }
+        public string? Longitude { get; set; }
 
         [Column("latitude_prevista")]
-        public string Latitude_Prevista { get; set; }
+        public string? LatitudePrevista { get; set; }
 
         [Column("longitude_prevista")]
-        public string Longitude_Prevista { get; set; }
+        public string? LongitudePrevista { get; set; }
 
         [Column("login")]
-        public string Login { get; set; }
+        public string? Login { get; set; }
 
         [Column("rodovia")]
-        public string Rodovia { get; set; }
+        public string? Rodovia { get; set; }
 
         [Column("km")]
-        public string Km { get; set; }
+        public string? Km { get; set; }
 
         [Column("metro")]
-        public string Metro { get; set; }
+        public string? Metro { get; set; }
 
         [Column("trecho")]
-        public string Trecho { get; set; }
+        public string? Trecho { get; set; }
 
         [Column("subtrecho")]
         [DefaultValue("")]
-        public string Subtrecho { get; set; }
+        public string? Subtrecho { get; set; }
 
         [Column("fotos")]
         [DefaultValue(";;;;")]
         [DataType(DataType.Text)]
-        public string Fotos { get; set; }
+        public string? Fotos { get; set; }
 
         [Column("camadas")]
         [DefaultValue(";;;")]
         [DataType(DataType.Text)]
-        public string Camadas { get; set; }
+        public string? Camadas { get; set; }
 
         [Column("espessuras")]
         [DataType(DataType.Text)]
-        public string Espessuras { get; set; }
+        public string? Espessuras { get; set; }
 
         [Column("observacao")]
         [DefaultValue("")]
-        public string Observacao { get; set; }
+        public string? Observacao { get; set; }
 
         [Column("area")]
-        public string Area { get; set; }
+        public string? Area { get; set; }
 
         [Column("status")]
-        public string Status { get; set; }
+        public string? Status { get; set; }
 
         [Column("entrega")]
-        public string Entrega { get; set; }
+        public string? Entrega { get; set; }
 
         [Column("regional")]
-        public string Regional { get; set; }
+        public string? Regional { get; set; }
 
         [Column("estaca")]
-        public string Estaca { get; set; }
+        public string? Estaca { get; set; }
 
         [Column("latitude_local")]
-        public string Latitude_Local { get; set; }
+        public string? LatitudeLocal { get; set; }
 
         [Column("longitude_local")]
-        public string Longitude_Local { get; set; }
+        public string? LongitudeLocal { get; set; }
 
         [Column("observacao_lado")]
-        public string Observacao_Lado { get; set; }
+        public string? Observacao_Lado { get; set; }
 
         [Column("data_modificacao")]
-        public string Data_Modificacao { get; set; }
+        public string? DataModificacao { get; set; }
 
         /* 
          *****************************************************************************

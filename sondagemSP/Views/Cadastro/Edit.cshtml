@@ -11,12 +11,12 @@
 
         <input asp-for="@Model.First().ID" type="hidden" id="cadastro-id" value="@Model.First().ID" />
         <input asp-for="@Model.First().Fotos" type="hidden" id="cadastro-fotos" value="@Model.First().Fotos" />
-        <input asp-for="@Model.First().Data_Cadastro" type="hidden" id="cadastro-data_cadastro" value="@Model.First().Data_Cadastro" />
-        <input asp-for="@Model.First().Data_Modificacao" type="hidden" id="cadastro-data_modificacao" value="@Model.First().Data_Modificacao" />
+        <input asp-for="@Model.First().DataCadastro" type="hidden" id="cadastro-data_cadastro" value="@Model.First().DataCadastro" />
+        <input asp-for="@Model.First().DataModificacao" type="hidden" id="cadastro-data_modificacao" value="@Model.First().DataModificacao" />
         <input asp-for="@Model.First().Observacao_Lado" type="hidden" id="cadastro-observacao_lado" value="@Model.First().Observacao_Lado" />
         <input asp-for="@Model.First().Entrega" type="hidden" id="cadastro-entrega" value="@Model.First().Entrega" />
-        <input asp-for="@Model.First().Latitude_Prevista" type="hidden" id="cadastro-latitude_prevista" value="@Model.First().Latitude_Prevista" />
-        <input asp-for="@Model.First().Longitude_Prevista" type="hidden" id="cadastro-longitude_prevista" value="@Model.First().Longitude_Prevista" />
+        <input asp-for="@Model.First().LatitudePrevista" type="hidden" id="cadastro-latitude_prevista" value="@Model.First().LatitudePrevista" />
+        <input asp-for="@Model.First().LongitudePrevista" type="hidden" id="cadastro-longitude_prevista" value="@Model.First().LongitudePrevista" />
         <input asp-for="@Model.First().Login" type="hidden" id="cadastro-login" value="@Model.First().Login" />
         <input asp-for="@Model.First().Trecho" type="hidden" id="cadastro-trecho" value="@Model.First().Trecho" />
         <input asp-for="@Model.First().Metro" type="hidden" id="cadastro-metro" value="@Model.First().Metro" />
@@ -77,12 +77,12 @@
             <!-- Latitude Prevista -->
             <div class="form-group col-md-6">
                 <label for="item-latitude">Latitude Local</label>
-                <input asp-for="@Model.First().Latitude_Local" class="form-control" id="cadastro-latitude" value="@Model.First().Latitude_Local" />
+                <input asp-for="@Model.First().LatitudeLocal" class="form-control" id="cadastro-latitude" value="@Model.First().LatitudeLocal" />
             </div>
             <!-- Longitude Prevista -->
             <div class="form-group col-md-6">
                 <label for="item-longitude">Longitude Local</label>
-                <input asp-for="@Model.First().Longitude_Local" class="form-control" id="cadastro-longitude" value="@Model.First().Longitude_Local" />
+                <input asp-for="@Model.First().LongitudeLocal" class="form-control" id="cadastro-longitude" value="@Model.First().LongitudeLocal" />
             </div>
         </div>
 

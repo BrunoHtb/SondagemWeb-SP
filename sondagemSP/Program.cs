@@ -20,6 +20,11 @@ builder.Services.AddDbContext<UsuarioDbContext>(options => options.UseNpgsql(con
 //Configura a injeção de container de dependencia
 builder.Services.AddTransient<ICadastroRepository, CadastroRepository>();
 
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+builder.Services.AddMemoryCache();
+builder.Services.AddSession();
+
 //Configuração para utilizar o IDENTITY
 builder.Services.AddIdentity<Usuario, IdentityRole>().
     AddEntityFrameworkStores<UsuarioDbContext>()
@@ -42,6 +47,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession();
 
 app.UseAuthentication();
 app.UseAuthorization();

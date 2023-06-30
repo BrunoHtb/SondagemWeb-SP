@@ -3,7 +3,13 @@
     ViewData["Title"] = "Cadastro";
 }
 <div class="text-center">
-    <h1 class="display-4">Cadastros Sondagem - SP</h1>
+    <h1 class="display-4 text-decoration-underline fw-bolder">Cadastros Sondagem - SP</h1>
+</div>
+
+<div style="margin:0px,20px">
+    <h3>
+        @ViewBag.TotalCadastro @ViewBag.Cadastro
+    </h3>
 </div>
 
 <div style="height: 300px; overflow-y: scroll">
@@ -14,7 +20,7 @@
                     @Html.DisplayNameFor(model => model.Nome)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Data_Cadastro)
+                    @Html.DisplayNameFor(model => model.DataCadastro)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Latitude)
@@ -42,34 +48,34 @@
             {
                 <tr class="linha-tabela">
                     <td id="nome">
-                        @Html.DisplayFor(modelItem => item.Nome)
+                        @item.Nome
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Data_Cadastro)
+                        @item.DataCadastro
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Latitude)
+                        @item.Latitude
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Longitude)
+                        @item.Longitude
                     </td>
                     <td id="latitude-prevista">
-                        @Html.DisplayFor(modelItem => item.Latitude_Prevista)
+                        @item.LatitudePrevista
                     </td>
                     <td id="longitude-prevista">
-                        @Html.DisplayFor(modelItem => item.Longitude_Prevista)
+                        @item.LongitudePrevista
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Rodovia)
+                        @item.Rodovia
                     </td>
                     <td id="estaca">
-                        @Html.DisplayFor(modelItem => item.Estaca)
+                        @item.Estaca
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Regional)
+                        @item.Regional
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Subtrecho)
+                        @item.Subtrecho
                     </td>
                     <td>
                         <div class="btn-group" role="group">
@@ -83,64 +89,22 @@
     </table>
 </div>
 
-<script src="~/lib/leaflet/leaflet.js"></script>
-<script src="~/lib/leaflet/leaflet.min.js"></script>
-
 <div id="map" style="width:100%; height:350px; margin-top:20px"></div>
 
+<script src="~/lib/leaflet/leaflet.js"></script>
+<script src="~/lib/leaflet/leaflet.min.js"></script>
+<script src="~/js/mapa.js"></script>
 <script>
-
     //Salva no jsModel a lista, foi necessario fazer new{Cadastros = Model} pq sem ele dá erro
     // de async
-    var jsModel = @Html.Raw(Json.Serialize(new {Cadastros = Model}));
 
+    var jsModel = @Html.Raw(Json.Serialize(new { Cadastros = Model }));
     //Pega o primeiro elemento para localizar no mapa a região
-    var map = L.map('map').setView([jsModel.cadastros[0].latitude_Prevista.replace(",", "."), jsModel.cadastros[0].longitude_Prevista.replace(",", ".")], 15);
+    var map = L.map('map').setView([jsModel.cadastros[0].latitudePrevista.replace(",", "."), jsModel.cadastros[0].longitudePrevista.replace(",", ".")], 15);
 
     L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}', {
         maxZoom: 22,
         subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
     }).addTo(map);
-
-    function mostrarTodosPopup() {    
-        for (i in jsModel.cadastros) {
-            item = jsModel.cadastros[i];
-            L.marker([item.latitude_Prevista.replace(",", "."), item.longitude_Prevista.replace(",", ".")])
-                .addTo(map)
-                .bindPopup(item.nome + "<br>" + item.estaca)
-                .openPopup();
-        }
-    }
-
-    function mostrarPopupClicado(lat, long, nome, estaca) {
-        L.marker([lat, long])
-            .addTo(map)
-            .bindPopup(nome + "<br>" + estaca)
-            .openPopup();
-        
-
-    }
-
-    //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    //Função responsavel para verificar qual linha foi clicado na tabela
-    var linhasTabela = document.querySelectorAll('.linha-tabela');
-    linhasTabela.forEach(function (linha) {
-        linha.addEventListener('click', function(){
-            $('tr').removeClass('table-active');
-            $(this).addClass('table-active');
-
-            var lat = document.querySelector('.table-active #latitude-prevista').textContent.replace(",", ".");
-            var long = document.querySelector('.table-active #longitude-prevista').textContent.replace(",", ".");
-            var nome = document.querySelector('.table-active #nome').textContent;
-            var estaca = document.querySelector('.table-active #estaca').textContent;
-
-            mostrarPopupClicado(lat, long, nome, estaca);
-            // voa para a posição do marcador e aplica o nível de zoom desejado
-            map.flyTo([lat, long], 18);
-        });
-    });
-
-    //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 </script>
 

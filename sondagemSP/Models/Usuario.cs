@@ -9,15 +9,15 @@ namespace sondagemSP.Models
     {
         [Key]
         [Column("id")]
-        public int Id { get; set; }
+        public int ID { get; set; }
 
         [Required]
         [Column("login")]
-        public string Login { get; set; }
+        public string? Login { get; set; }
 
         [Required]
         [Column("password_user")]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public string? Password { get; set; }
     }
 }

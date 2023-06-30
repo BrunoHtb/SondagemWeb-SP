@@ -20,6 +20,10 @@ namespace sondagemSP.Controllers
         public IActionResult Index()
         {
             var listCadastro = _cadastroRepository.Cadastros.OrderBy(p => p.Nome);
+
+            ViewBag.TotalCadastro = "Total de Cadastros: ";
+            ViewBag.Cadastro = listCadastro.Count();
+
             return View(listCadastro);
         }
 
@@ -43,7 +47,7 @@ namespace sondagemSP.Controllers
              */
             cadastroAtualizar.Login = (cadastroAtualizar.Login == null) ? "" : cadastroAtualizar.Login;
             cadastroAtualizar.Metro = (cadastroAtualizar.Metro == null) ? "" : cadastroAtualizar.Metro;
-            cadastroAtualizar.Data_Cadastro = (cadastroAtualizar.Data_Cadastro == null) ? "" : cadastroAtualizar.Data_Cadastro;
+            cadastroAtualizar.DataCadastro = (cadastroAtualizar.DataCadastro == null) ? "" : cadastroAtualizar.DataCadastro;
             cadastroAtualizar.Km = (cadastroAtualizar.Km == null) ? "" : cadastroAtualizar.Km;
             cadastroAtualizar.Area = (cadastroAtualizar.Area == null) ? "" : cadastroAtualizar.Area;
             cadastroAtualizar.Observacao = (cadastroAtualizar.Observacao == null) ? "" : cadastroAtualizar.Observacao;
@@ -54,7 +58,7 @@ namespace sondagemSP.Controllers
             cadastroAtualizar.Espessuras = cadastroAtualizar.Espessura1 + ";" + cadastroAtualizar.Espessura2 + ";" + cadastroAtualizar.Espessura3 + ";" + cadastroAtualizar.Espessura4 + ";";
             cadastroAtualizar.Fotos = cadastroAtualizar.Fotos;
 
-            cadastroAtualizar.Data_Modificacao = DateTime.Now.ToString("ddMMyyyy_HHmmssfff");
+            cadastroAtualizar.DataModificacao = DateTime.Now.ToString("ddMMyyyy_HHmmssfff");
             _context.Cadastro.Update(cadastroAtualizar);
             _context.SaveChanges();
             return RedirectToAction("Index");
